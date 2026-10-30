@@ -1,0 +1,3399 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========================================
+   1. 全站設計變數
+======================================== */
+
+:root {
+  --color-wine: #A25353;
+  --color-wine-dark: #713A38;
+  --color-paper: #F5F0E7;
+  --color-paper-light: #FBF7F0;
+  --color-ink: #292821;
+  --color-tea: #B8BDA0;
+  --color-muted: #786F63;
+  --color-line: #D6C9B8;
+
+  --font-display: "Noto Serif TC", serif;
+  --font-body: "Noto Sans TC", sans-serif;
+
+  --content-width: 1280px;
+  --page-gutter: clamp(20px, 5vw, 80px);
+  --section-space: clamp(64px, 8vw, 120px);
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 0px;
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+body,
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button,
+a {
+  touch-action: manipulation;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+}
+
+::selection {
+  background: var(--color-wine);
+  color: white;
+}
+
+.container {
+  width: min(
+    calc(100% - 2 * var(--page-gutter)),
+    var(--content-width)
+  );
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--section-space);
+}
+
+.eyebrow {
+  margin-bottom: 16px;
+  color: var(--color-wine);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1.6;
+}
+
+.body-copy {
+  max-width: 460px;
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 2;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 44px;
+  padding: 10px 22px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.button-primary {
+  background: var(--color-wine);
+  color: #fffaf3;
+}
+
+.button-primary:hover {
+  background: var(--color-wine-dark);
+}
+
+.button-outline {
+  border-color: var(--color-wine);
+  color: var(--color-wine-dark);
+}
+
+.button-outline:hover {
+  background: var(--color-wine);
+  color: white;
+}
+
+.button-light {
+  background: var(--color-paper);
+  color: var(--color-wine-dark);
+}
+
+.button-light:hover {
+  background: white;
+}
+
+/* ========================================
+   2. 導覽列 Navbar
+======================================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  border-bottom: 1px solid rgba(120, 90, 70, 0.12);
+  background: rgba(245, 240, 231, 0.96);
+  backdrop-filter: blur(14px);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: min(100% - 48px, 1440px);
+  min-height: 76px;
+  margin: 0 auto;
+}
+
+.brand {
+  display: inline-flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  color: var(--color-ink);
+  line-height: 1.15;
+}
+
+.brand-chinese {
+  font-family: var(--font-display);
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.brand-english {
+  margin-top: 2px;
+  font-family: Georgia, serif;
+  font-size: 13px;
+  font-style: italic;
+  text-align: center;
+}
+
+.brand-divider {
+  width: 1px;
+  height: 34px;
+  flex-shrink: 0;
+  background: var(--color-muted);
+  opacity: 0.65;
+}
+
+.brand-edition {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 0.12em;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 2vw, 30px);
+  margin-left: auto;
+}
+
+.main-nav a,
+.footer-nav a {
+  position: relative;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.main-nav a::after {
+  position: absolute;
+  right: 0;
+  bottom: -8px;
+  left: 0;
+  height: 2px;
+  background: var(--color-wine);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.main-nav a:hover::after,
+.main-nav a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-left: 14px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--color-wine);
+  color: white;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.nav-cta:hover {
+  background: var(--color-wine-dark);
+}
+
+.menu-toggle {
+  display: none;
+}
+
+/* ========================================
+   4. About 關於我們
+======================================== */
+
+.about-section {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 10% 50%,
+      rgba(184, 189, 160, 0.18),
+      transparent 40%
+    ),
+    var(--color-paper-light);
+}
+
+.about-layout {
+  display: grid;
+  grid-template-columns: 0.95fr 1fr 1.15fr;
+  align-items: center;
+  gap: clamp(28px, 4vw, 64px);
+}
+
+.about-visual {
+  position: relative;
+  min-width: 0;
+}
+
+.about-photo-main {
+  overflow: hidden;
+  padding: 10px;
+  background: #fffaf2;
+  box-shadow: 0 15px 35px rgba(70, 50, 35, 0.15);
+  transform: rotate(-5deg);
+}
+
+.about-photo-main img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.about-stamp {
+  position: absolute;
+  right: -10px;
+  bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid var(--color-line);
+  background: var(--color-paper);
+  color: var(--color-wine);
+  transform: rotate(5deg);
+}
+
+.about-stamp span {
+  font-size: 8px;
+  letter-spacing: 0.14em;
+}
+
+.about-stamp strong {
+  font-family: var(--font-display);
+  font-size: 25px;
+}
+
+.about-copy h2,
+.section-heading h2 {
+  margin-bottom: 20px;
+  font-size: clamp(30px, 3vw, 43px);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.about-copy .button {
+  margin-top: 10px;
+}
+
+.about-principles {
+  min-width: 0;
+}
+
+.about-principles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.principle {
+  text-align: center;
+}
+
+.principle-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 12px;
+  place-items: center;
+  border: 1px solid var(--color-wine);
+  border-radius: 50%;
+  color: var(--color-wine);
+  font-size: 22px;
+}
+
+.principle h3,
+.principle p {
+  margin-bottom: 3px;
+  color: var(--color-wine-dark);
+  font-family: var(--font-display);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.about-photo-strip {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.about-photo-strip img {
+  width: 100%;
+  aspect-ratio: 1.2 / 1;
+  border: 5px solid #fffaf2;
+  box-shadow: 0 5px 12px rgba(60, 45, 30, 0.1);
+  object-fit: cover;
+}
+
+.about-photo-strip img:nth-child(1) {
+  transform: rotate(-4deg);
+}
+
+.about-photo-strip img:nth-child(2) {
+  transform: rotate(3deg);
+}
+
+.about-photo-strip img:nth-child(3) {
+  transform: rotate(-2deg);
+}
+
+/* ========================================
+   5. Food Guide 店家指南
+======================================== */
+
+.food-section {
+  background: var(--color-paper);
+  scroll-margin-top: 40px;
+}
+
+.food-section > .container {
+  display: grid;
+  grid-template-columns: 0.7fr 1.8fr;
+  gap: clamp(28px, 4vw, 60px);
+}
+
+.guide-intro h2 {
+  margin-bottom: 8px;
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.45;
+}
+
+.guide-subtitle {
+  margin-bottom: 14px;
+  color: var(--color-wine);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.guide-intro .button {
+  margin-top: 12px;
+}
+
+.guide-content {
+  min-width: 0;
+}
+
+.meal-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.meal-button {
+  padding: 8px 14px;
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.meal-button:hover,
+.meal-button.active {
+  border-color: var(--color-wine);
+  background: var(--color-wine);
+  color: white;
+}
+
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.shop-card {
+  min-width: 0;
+}
+
+.shop-card-link {
+  display: block;
+  height: 100%;
+}
+
+.shop-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: #e2d4c2;
+}
+
+.shop-image img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.shop-card-link:hover .shop-image img {
+  transform: scale(1.05);
+}
+
+.meal-label {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 5px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  background: rgba(41, 40, 33, 0.65);
+  color: white;
+  font-size: 11px;
+  backdrop-filter: blur(8px);
+}
+
+.shop-copy {
+  padding: 15px 2px 10px;
+}
+
+.shop-index {
+  margin-bottom: 7px;
+  color: var(--color-muted);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+}
+
+.shop-copy h3 {
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.shop-copy > p:not(.shop-index) {
+  min-height: 48px;
+  margin-bottom: 12px;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-wine);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.text-link span {
+  transition: transform 0.2s ease;
+}
+
+.shop-card-link:hover .text-link span,
+.story-card a:hover .text-link span {
+  transform: translateX(4px);
+}
+
+.empty-state {
+  padding: 30px;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.guide-bottom-link {
+  margin-top: 26px;
+  text-align: right;
+}
+
+/* ========================================
+   6. Local Stories 地方故事
+======================================== */
+
+.stories-section {
+  background: var(--color-paper-light);
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 34px;
+}
+
+.section-heading h2 {
+  margin-bottom: 8px;
+}
+
+.section-heading .body-copy {
+  margin-bottom: 0;
+}
+
+.heading-mark {
+  flex-shrink: 0;
+  padding: 10px 16px;
+  border: 1px solid var(--color-line);
+  color: var(--color-wine);
+  font-family: var(--font-display);
+  font-size: 18px;
+  writing-mode: vertical-rl;
+}
+
+.stories-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.story-card {
+  min-width: 0;
+}
+
+.story-card a {
+  display: block;
+}
+
+.story-image {
+  position: relative;
+  overflow: hidden;
+  background: #d5c5b1;
+}
+
+.story-image img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.story-card a:hover .story-image img {
+  transform: scale(1.04);
+}
+
+.story-number {
+  position: absolute;
+  right: 14px;
+  bottom: 8px;
+  color: white;
+  font-family: Georgia, serif;
+  font-size: 40px;
+  opacity: 0.9;
+}
+
+.story-copy {
+  padding: 22px 4px;
+}
+
+.story-copy .eyebrow {
+  margin-bottom: 8px;
+  font-size: 9px;
+}
+
+.story-copy h3 {
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+.story-copy > p:not(.eyebrow) {
+  min-height: 52px;
+  margin-bottom: 15px;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+/* ========================================
+   7. 紙本 × 數位出版入口
+======================================== */
+
+.publication-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  min-height: 300px;
+  overflow: hidden;
+  padding: 56px max(var(--page-gutter), calc((100vw - 1280px) / 2));
+  background:
+    linear-gradient(
+      110deg,
+      rgba(73, 42, 35, 0.95),
+      rgba(162, 83, 83, 0.93)
+    );
+  color: var(--color-paper-light);
+}
+
+.publication-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.publication-copy .eyebrow {
+  color: #f0d8c6;
+}
+
+.publication-copy h2 {
+  margin-bottom: 16px;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.5;
+}
+
+.publication-copy > p:not(.eyebrow) {
+  margin-bottom: 20px;
+  color: rgba(255, 250, 243, 0.8);
+  font-size: 13px;
+  line-height: 2;
+}
+
+.publication-mark {
+  display: grid;
+  grid-template-columns: repeat(2, 70px);
+  gap: 10px;
+  transform: rotate(-8deg);
+}
+
+.publication-mark span {
+  display: grid;
+  width: 70px;
+  height: 70px;
+  place-items: center;
+  border: 1px solid rgba(255, 250, 243, 0.65);
+  color: rgba(255, 250, 243, 0.85);
+  font-family: var(--font-display);
+  font-size: 30px;
+}
+
+/* ========================================
+   8. Footer 頁尾
+======================================== */
+
+.site-footer {
+  padding: 36px max(var(--page-gutter), calc((100vw - 1280px) / 2)) 18px;
+  background:
+    radial-gradient(
+      ellipse at 50% 100%,
+      rgba(184, 189, 160, 0.3),
+      transparent 60%
+    ),
+    var(--color-paper);
+}
+
+.footer-main {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.footer-brand .brand-chinese {
+  font-size: 23px;
+}
+
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-left: auto;
+}
+
+.footer-nav a {
+  color: var(--color-muted);
+  font-size: 11px;
+}
+
+.footer-nav a:hover {
+  color: var(--color-wine);
+}
+
+.footer-top {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  place-items: center;
+  border: 1px solid var(--color-line);
+  border-radius: 50%;
+  color: var(--color-wine);
+  font-size: 20px;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 16px;
+  color: var(--color-muted);
+  font-size: 10px;
+}
+
+.footer-bottom p {
+  margin-bottom: 0;
+}
+
+/* ========================================
+   9. 動畫
+======================================== */
+
+@keyframes hero-reveal {
+  from {
+    opacity: 0.5;
+    transform: scale(1.035);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes content-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================
+   10. 平板與手機版
+======================================== */
+
+@media (max-width: 1100px) {
+  .nav-inner {
+    width: calc(100% - 36px);
+    gap: 12px;
+  }
+
+  .brand-chinese {
+    font-size: 22px;
+  }
+
+  .main-nav {
+    gap: 14px;
+  }
+
+  .main-nav a {
+    font-size: 11px;
+  }
+
+  .nav-cta {
+    margin-left: 2px;
+    padding: 9px 12px;
+  }
+
+  .about-layout {
+    grid-template-columns: 0.8fr 1fr;
+  }
+
+  .about-principles {
+    grid-column: 1 / -1;
+    margin-top: 12px;
+  }
+
+  .food-section > .container {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-intro {
+    max-width: 560px;
+  }
+
+  .guide-intro .body-copy br {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  :root {
+    --page-gutter: 22px;
+    --section-space: 64px;
+  }
+
+  body {
+    font-size: 14px;
+  }
+
+  .nav-inner {
+    position: relative;
+    min-height: 68px;
+  }
+
+  .brand-chinese {
+    font-size: 21px;
+  }
+
+  .brand-english {
+    font-size: 11px;
+  }
+
+  .brand-divider {
+    height: 28px;
+  }
+
+  .brand-edition {
+    font-size: 13px;
+  }
+
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    margin-left: auto;
+    padding: 8px;
+    border: 1px solid var(--color-line);
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: var(--color-ink);
+  }
+
+  .main-nav {
+    position: absolute;
+    top: calc(100% + 1px);
+    right: -18px;
+    left: -18px;
+    display: none;
+    align-items: stretch;
+    gap: 0;
+    margin: 0;
+    padding: 10px 22px 20px;
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-paper-light);
+    box-shadow: 0 12px 20px rgba(50, 35, 25, 0.08);
+  }
+
+  .main-nav.is-open {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main-nav a {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(214, 201, 184, 0.6);
+    font-size: 14px;
+  }
+
+  .main-nav a::after {
+    display: none;
+  }
+
+  .nav-cta {
+    display: none;
+  }
+
+  .hero {
+    align-items: flex-end;
+    min-height: 640px;
+  }
+
+  .hero-photo {
+    background-image:
+      linear-gradient(
+        0deg,
+        rgba(245, 240, 231, 0.98) 0%,
+        rgba(245, 240, 231, 0.92) 33%,
+        rgba(245, 240, 231, 0.35) 60%,
+        rgba(20, 17, 14, 0.1) 100%
+      ),
+      url("https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=85");
+    background-position: center, 55% center;
+  }
+
+  .hero-content {
+    width: 100%;
+    padding: 0 var(--page-gutter) 75px;
+  }
+
+  .hero-kicker {
+    font-size: 16px;
+  }
+
+  .hero-kicker-second {
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-size: clamp(58px, 15vw, 88px);
+  }
+
+  .hero-english {
+    font-size: 33px;
+  }
+
+  .hero-edition {
+    font-size: 15px;
+  }
+
+  .hero-side-note {
+    top: 22px;
+    right: 20px;
+    gap: 8px;
+  }
+
+  .hero-side-note p {
+    margin-top: 30px;
+    font-size: 11px;
+  }
+
+  .vertical-label {
+    font-size: 10px;
+  }
+
+  .scroll-cue {
+    right: var(--page-gutter);
+    bottom: 22px;
+    color: var(--color-wine-dark);
+  }
+
+  .about-layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .about-visual {
+    width: min(75%, 330px);
+    margin: 0 auto;
+  }
+
+  .about-copy h2,
+  .section-heading h2 {
+    font-size: 32px;
+  }
+
+  .about-principles {
+    grid-column: auto;
+    gap: 8px;
+  }
+
+  .principle-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 19px;
+  }
+
+  .principle h3,
+  .principle p {
+    font-size: 11px;
+  }
+
+  .about-photo-strip {
+    gap: 7px;
+  }
+
+  .food-section > .container {
+    gap: 28px;
+  }
+
+  .guide-intro h2 {
+    font-size: 31px;
+  }
+
+  .meal-filters {
+    gap: 7px;
+  }
+
+  .meal-button {
+    padding: 7px 12px;
+  }
+
+  .shop-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 14px;
+  }
+
+  .shop-copy h3 {
+    font-size: 16px;
+  }
+
+  .shop-copy > p:not(.shop-index) {
+    min-height: 0;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+  }
+
+  .heading-mark {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .stories-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .story-card {
+    display: grid;
+    grid-template-columns: 0.95fr 1fr;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .story-copy {
+    padding: 6px 0;
+  }
+
+  .story-copy h3 {
+    font-size: 18px;
+  }
+
+  .story-copy > p:not(.eyebrow) {
+    min-height: 0;
+    font-size: 12px;
+  }
+
+  .story-number {
+    font-size: 28px;
+  }
+
+  .publication-section {
+    min-height: 0;
+    padding: 48px var(--page-gutter);
+  }
+
+  .publication-mark {
+    grid-template-columns: repeat(2, 42px);
+    gap: 6px;
+  }
+
+  .publication-mark span {
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+  }
+
+  .publication-copy h2 {
+    font-size: 26px;
+  }
+
+  .publication-copy > p:not(.eyebrow) {
+    font-size: 12px;
+  }
+
+  .footer-main {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-brand .brand-chinese {
+    font-size: 20px;
+  }
+
+  .footer-nav {
+    order: 3;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 12px 18px;
+    margin: 12px 0 0;
+  }
+
+  .footer-top {
+    margin-left: auto;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+@media (max-width: 420px) {
+  .brand-chinese {
+    font-size: 18px;
+  }
+
+  .brand-edition {
+    font-size: 12px;
+  }
+
+  .hero {
+    min-height: 590px;
+  }
+
+  .hero h1 {
+    font-size: 56px;
+  }
+
+  .shop-grid {
+    gap: 20px 10px;
+  }
+
+  .meal-button {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .story-card {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .story-image img {
+    aspect-ratio: 16 / 9;
+  }
+
+  .publication-mark {
+    display: none;
+  }
+}
+
+/* 鍵盤操作的焦點提示 */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-wine);
+  outline-offset: 4px;
+}
+
+/* 尊重使用者減少動態效果的偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ========================================
+   全螢幕封面 Intro Cover
+======================================== */
+
+.intro-cover {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  place-items: center;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  transform-origin: center top;
+  will-change: transform, opacity;
+}
+
+/* 封面背景照片 */
+.intro-cover-photo {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(245, 240, 231, 0.88) 0%,
+      rgba(245, 240, 231, 0.70) 45%,
+      rgba(245, 240, 231, 0.24) 100%
+    ),
+    url("https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=2000&q=90");
+  background-position: center;
+  background-size: cover;
+  animation: cover-photo-appear 1.2s ease both;
+}
+
+/* 淡淡的紙張質感 */
+.intro-cover-texture {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse at 20% 20%,
+      rgba(255, 255, 255, 0.5),
+      transparent 50%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(245, 240, 231, 0.22),
+      transparent 35%
+    );
+}
+
+.intro-cover-content {
+  width: min(100% - 48px, 900px);
+  padding: 48px 0;
+  text-align: center;
+  animation: cover-content-appear 0.9s 0.15s ease both;
+}
+
+.intro-cover-kicker {
+  margin-bottom: 22px;
+  font-family: var(--font-display);
+  font-size: clamp(15px, 2vw, 23px);
+  letter-spacing: 0.15em;
+  line-height: 1.9;
+}
+
+.intro-cover-rule {
+  width: 52px;
+  height: 1px;
+  margin: 0 auto 18px;
+  background: var(--color-wine);
+}
+
+.intro-cover-label {
+  margin-bottom: 12px;
+  color: var(--color-wine);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+}
+
+.intro-cover-content h1 {
+  margin-bottom: 0;
+  font-size: clamp(64px, 11vw, 132px);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  line-height: 1.35;
+}
+
+.intro-cover-english {
+  margin-bottom: 16px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 5vw, 55px);
+  font-style: italic;
+  line-height: 1.35;
+}
+
+.intro-cover-edition {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 28px;
+  font-family: var(--font-display);
+  font-size: 17px;
+  letter-spacing: 0.25em;
+}
+
+.intro-cover-edition span {
+  width: 40px;
+  height: 1px;
+  background: var(--color-wine);
+}
+
+.intro-cover-description {
+  margin-bottom: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  line-height: 2.2;
+}
+
+.intro-cover-bottom {
+  position: absolute;
+  right: 32px;
+  bottom: 24px;
+  left: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--color-muted);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+}
+
+.intro-cover-scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-wine);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+.intro-cover-scroll span {
+  font-size: 20px;
+  animation: cover-scroll-bounce 1.6s ease-in-out infinite;
+}
+
+@keyframes cover-photo-appear {
+  from {
+    opacity: 0.6;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes cover-content-appear {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cover-scroll-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+/* 手機版封面 */
+@media (max-width: 760px) {
+  .intro-cover {
+    min-height: 520px;
+  }
+
+  .intro-cover-photo {
+    background-image:
+      linear-gradient(
+        0deg,
+        rgba(245, 240, 231, 0.93) 0%,
+        rgba(245, 240, 231, 0.73) 50%,
+        rgba(245, 240, 231, 0.35) 100%
+      ),
+      url("https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=85");
+    background-position: center;
+  }
+
+  .intro-cover-content {
+    width: calc(100% - 36px);
+  }
+
+  .intro-cover-content h1 {
+    font-size: clamp(52px, 13vw, 82px);
+    letter-spacing: 0.08em;
+  }
+
+  .intro-cover-kicker {
+    font-size: 15px;
+  }
+
+  .intro-cover-english {
+    font-size: 32px;
+  }
+
+  .intro-cover-bottom {
+    right: 18px;
+    bottom: 18px;
+    left: 18px;
+    font-size: 8px;
+  }
+}
+
+/* 尊重使用者減少動態效果的偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .intro-cover-photo,
+  .intro-cover-content,
+  .intro-cover-scroll span {
+    animation: none !important;
+  }
+}
+
+/* ========================================
+   木柵美食地圖
+======================================== */
+
+.food-map-section {
+  background: #faf7f2;
+  scroll-margin-top: 60px;
+}
+
+.food-map-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.food-map-heading h2 {
+  margin-bottom: 12px;
+  font-size: clamp(28px, 4vw, 46px);
+}
+
+.food-map-heading p {
+  max-width: 620px;
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.food-map-count {
+  flex-shrink: 0;
+  color: var(--color-wine);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+}
+
+/* ========================================
+   木柵美食地圖｜新版全螢幕互動地圖
+======================================== */
+
+/* 01. 區塊標題 */
+
+.food-map-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.food-map-heading h2 {
+  margin-bottom: 12px;
+  font-size: clamp(28px, 4vw, 46px);
+}
+
+.food-map-heading p {
+  max-width: 620px;
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.food-map-count {
+  flex-shrink: 0;
+  color: var(--color-wine);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+}
+
+/* 02. 首頁地圖入口 */
+
+.food-map-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr);
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--color-line);
+  border-radius: 4px;
+  background: #fffdf9;
+  color: var(--color-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  transition: box-shadow 250ms ease;
+}
+
+.food-map-entry:hover {
+  box-shadow: 0 14px 35px rgba(40, 30, 20, 0.09);
+}
+
+.food-map-entry:focus-visible {
+  outline: 3px solid var(--color-wine);
+  outline-offset: 4px;
+}
+
+.food-map-entry-preview {
+  height: 300px;
+  overflow: hidden;
+  background: #f7f2eb;
+}
+
+.food-map-entry-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.food-map-entry-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 38px;
+}
+
+.food-map-entry-label {
+  color: var(--color-wine);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+.food-map-entry-content h3 {
+  margin: 18px 0 12px;
+  font-size: clamp(24px, 2.5vw, 36px);
+  font-weight: 500;
+}
+
+.food-map-entry-content p {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.9;
+}
+
+.food-map-entry-action {
+  margin-top: 28px;
+  color: var(--color-wine);
+  font-weight: 600;
+}
+
+/* 03. 全螢幕地圖視窗 */
+
+.food-map-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  background: #f4efe6;
+}
+
+.food-map-modal-header {
+  flex-shrink: 0;
+  min-height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 28px;
+  background: #f8f4ed;
+  border-bottom: 1px solid #d9cbbb;
+}
+
+.food-map-modal-header > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.food-map-modal-header strong {
+  color: var(--color-ink);
+  font-size: 18px;
+}
+
+.food-map-modal-header span {
+  color: var(--color-wine);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+/* 04. 縮放與關閉按鈕 */
+
+.food-map-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.food-map-controls button {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid #d8c9ba;
+  border-radius: 50%;
+  background: #fff;
+  color: #302b27;
+  font: inherit;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.food-map-controls button:hover:not(:disabled) {
+  background: #eee6dc;
+}
+
+.food-map-controls button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.food-map-controls > span {
+  min-width: 45px;
+  text-align: center;
+  color: #655d55;
+  font-size: 13px;
+}
+
+.food-map-controls .food-map-close {
+  margin-left: 10px;
+  background: var(--color-wine);
+  border-color: var(--color-wine);
+  color: white;
+  font-size: 16px;
+}
+
+.food-map-controls .food-map-close:hover {
+  background: #833e3e;
+}
+
+.food-map-controls button:focus-visible,
+.food-map-pin:focus-visible,
+.food-map-shop-popup button:focus-visible {
+  outline: 3px solid #292821;
+  outline-offset: 3px;
+}
+
+/* 05. 地圖捲動區域 */
+
+.food-map-modal-viewport {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  cursor: grab;
+}
+
+.food-map-modal-viewport:active {
+  cursor: grabbing;
+}
+
+/* 地圖與編號共用同一座標系統 */
+
+.food-map-stage {
+  position: relative;
+  width: 100%;
+  min-width: 100%;
+  margin: 0 auto;
+  background: #fff;
+}
+
+.food-map-stage > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* 06. 地圖上的 19 個互動編號 */
+
+.food-map-pin {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  place-items: center;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--color-wine);
+  color: #fff;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  touch-action: manipulation;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition:
+    background 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.food-map-pin:hover,
+.food-map-pin.is-active {
+  z-index: 3;
+  background: #763637;
+  box-shadow: 0 0 0 4px rgba(162, 83, 83, 0.2);
+}
+
+/* 07. 點擊編號後的店家資訊卡 */
+
+.food-map-shop-popup {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  bottom: 64px;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+  width: min(360px, calc(100% - 32px));
+  padding: 18px 22px;
+  background: #fffdf9;
+  border: 1px solid #d8c9ba;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.food-map-shop-popup > div {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.food-map-shop-popup span {
+  color: var(--color-wine);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+.food-map-shop-popup strong {
+  color: var(--color-ink);
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.food-map-shop-popup button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #6b625b;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* 08. 底部操作提示 */
+
+.food-map-modal-footer {
+  flex-shrink: 0;
+  padding: 12px 20px;
+  text-align: center;
+  background: #f8f4ed;
+  border-top: 1px solid #d9cbbb;
+  color: #82766b;
+  font-size: 12px;
+}
+
+/* 09. 平板與手機 */
+
+@media (max-width: 900px) {
+  .food-map-entry {
+    grid-template-columns: 1fr;
+  }
+
+  .food-map-entry-preview {
+    height: 240px;
+  }
+
+  .food-map-entry-content {
+    padding: 28px;
+  }
+}
+
+@media (max-width: 600px) {
+  .food-map-heading {
+    display: block;
+  }
+
+  .food-map-count {
+    display: inline-block;
+    margin-top: 16px;
+  }
+
+  .food-map-entry-preview {
+    height: 190px;
+  }
+
+  .food-map-entry-content {
+    padding: 24px;
+  }
+
+  .food-map-modal-header {
+    min-height: 65px;
+    padding: 10px 14px;
+  }
+
+  .food-map-modal-header strong {
+    font-size: 14px;
+  }
+
+  .food-map-controls {
+    gap: 4px;
+  }
+
+  .food-map-controls button {
+    width: 34px;
+    height: 34px;
+  }
+
+  .food-map-controls .food-map-close {
+    margin-left: 4px;
+  }
+
+  .food-map-pin {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  .food-map-modal-footer {
+    padding: 10px 12px;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+}
+
+/* 10. 減少動態效果偏好 */
+
+@media (prefers-reduced-motion: reduce) {
+  .food-map-entry,
+  .food-map-pin {
+    transition: none;
+  }
+}
+
+
+/* ========================================
+   Publication｜電子雜誌閱讀器
+======================================== */
+
+.magazine-reader-overlay {
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      #57483b 0%,
+      #29231f 100%
+    );
+
+  color: #f5f0e7;
+  box-sizing: border-box;
+}
+
+/* 頂部工具列 */
+
+.reader-toolbar {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  min-height: 76px;
+  padding: 12px clamp(16px, 4vw, 48px);
+
+  border-bottom:
+    1px solid rgba(245, 240, 231, 0.18);
+
+  background: rgba(25, 22, 20, 0.45);
+  box-sizing: border-box;
+}
+
+.reader-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.reader-brand-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: 0.12em;
+}
+
+.reader-brand-subtitle {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  opacity: 0.75;
+}
+
+.reader-hint {
+  margin: 0;
+  color: rgba(245, 240, 231, 0.7);
+  font-size: 12px;
+  text-align: center;
+}
+
+.reader-close {
+  display: grid;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+
+  border: 1px solid rgba(245, 240, 231, 0.4);
+  border-radius: 50%;
+
+  background: transparent;
+  color: #f5f0e7;
+
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+
+  transition:
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.reader-close:hover {
+  background: #f5f0e7;
+  color: #292821;
+}
+
+/* 閱讀器主要區域 */
+
+.reader-stage {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+
+  align-items: stretch;
+  justify-content: center;
+
+  padding: 12px 16px 16px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* 雜誌容器 */
+
+.magazine-book-wrap {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: flex-start;
+
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  gap: 10px;
+  box-sizing: border-box;
+}
+
+/* 專門負責雜誌本體尺寸的區域 */
+
+.magazine-book-viewport {
+  display: flex;
+  flex: 1 1 0;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* 翻頁容器 */
+
+.magazine-flipbook {
+  flex-shrink: 0;
+  margin: 0 auto;
+}
+
+/* 單張書頁 */
+
+.magazine-page {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  min-width: 0;
+  min-height: 0;
+
+  overflow: hidden;
+  box-sizing: border-box;
+
+  background: #fff;
+  color: #292821;
+  box-shadow: none;
+}
+
+/* PDF 頁面 */
+
+.magazine-page .react-pdf__Page {
+  position: relative;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  max-width: 100%;
+  margin: 0;
+
+  background: #fff;
+}
+
+/* PDF Canvas */
+
+.magazine-page .react-pdf__Page__canvas {
+  display: block;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* 載入中的書頁 */
+
+.page-loading {
+  width: 100%;
+  height: 100%;
+  background: #eee7dc;
+}
+
+/* 頁碼 */
+
+.reader-page-count {
+  flex: 0 0 auto;
+  max-width: 100%;
+
+  margin: 0;
+  padding: 0 8px;
+
+  color: rgba(245, 240, 231, 0.7);
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* 翻頁控制按鈕 */
+
+.reader-page-controls {
+  display: flex;
+  flex: 0 0 auto;
+
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  padding: 8px 16px 10px;
+  box-sizing: border-box;
+}
+
+.reader-page-controls button {
+  min-width: 112px;
+  padding: 9px 16px;
+
+  border:
+    1px solid rgba(245, 240, 231, 0.4);
+  border-radius: 30px;
+
+  background: transparent;
+  color: #f5f0e7;
+
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+
+  transition:
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.reader-page-controls button:hover {
+  background: #f5f0e7;
+  color: #292821;
+}
+
+.reader-close:focus-visible,
+.reader-page-controls button:focus-visible {
+  outline: 3px solid #d6c9b8;
+  outline-offset: 4px;
+}
+
+/* 載入與錯誤提示 */
+
+.reader-loading,
+.reader-error {
+  max-width: 520px;
+  margin: auto;
+  padding: 24px;
+
+  color: #f5f0e7;
+  text-align: center;
+  line-height: 1.8;
+}
+
+.reader-error a {
+  display: inline-block;
+  margin-top: 12px;
+
+  color: #f5f0e7;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* PDF 載入進度條 */
+
+.reader-progress {
+  width: min(360px, 80vw);
+  margin: auto;
+  padding: 24px;
+
+  color: #f5f0e7;
+  text-align: center;
+}
+
+.reader-progress p {
+  margin: 0 0 16px;
+  font-size: 14px;
+}
+
+.reader-progress-track {
+  width: 100%;
+  height: 6px;
+
+  overflow: hidden;
+  border-radius: 999px;
+
+  background: rgba(245, 240, 231, 0.2);
+}
+
+.reader-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+
+  background: #c58a7c;
+  transition: width 200ms ease;
+}
+
+.reader-progress .reader-progress-note {
+  margin-top: 14px;
+  margin-bottom: 0;
+
+  color: rgba(245, 240, 231, 0.7);
+  font-size: 12px;
+}
+
+/* ========================================
+   手機版
+======================================== */
+
+@media (max-width: 600px) {
+  .reader-toolbar {
+    min-height: 64px;
+    gap: 8px;
+    padding: 10px 14px;
+  }
+
+  .reader-brand-title {
+    font-size: 18px;
+  }
+
+  .reader-brand-subtitle {
+    font-size: 8px;
+  }
+
+  .reader-hint {
+    display: none;
+  }
+
+  .reader-close {
+    width: 38px;
+    height: 38px;
+  }
+
+  .reader-stage {
+    padding: 10px 8px 12px;
+  }
+
+  .magazine-book-wrap {
+    gap: 8px;
+  }
+
+  .reader-page-count {
+    font-size: 10px;
+    line-height: 1.5;
+  }
+
+  .reader-page-controls {
+    gap: 10px;
+
+    padding:
+      8px 4px
+      max(12px, env(safe-area-inset-bottom));
+  }
+
+  .reader-page-controls button {
+    min-width: 104px;
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+}
+
+/* 減少動畫偏好 */
+
+@media (prefers-reduced-motion: reduce) {
+  .reader-close,
+  .reader-page-controls button {
+    transition: none;
+  }
+}
+
+
+/* ========================================
+   Publication｜離開閱讀器按鈕
+======================================== */
+
+.reader-page-controls .reader-exit-button {
+  min-width: 88px;
+  border: 1px solid #a25353;
+  background: #a25353;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.reader-page-controls .reader-exit-button:hover {
+  border-color: #b86666;
+  background: #b86666;
+  color: #ffffff;
+}
+
+/* 三顆按鈕維持同一排 */
+.reader-page-controls {
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+/* 手機版調整按鈕大小 */
+@media (max-width: 600px) {
+  .reader-page-controls {
+    width: 100%;
+    gap: 8px;
+    padding-inline: 4px;
+  }
+
+  .reader-page-controls button {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 10px 6px;
+    white-space: nowrap;
+    font-size: 12px;
+  }
+
+  .reader-page-controls .reader-exit-button {
+    flex: 0 0 68px;
+    min-width: 68px;
+  }
+}
+
+/* ========================================
+   美食地圖｜店家詳細資訊視窗
+======================================== */
+
+.food-map-detail-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(28, 24, 20, 0.68);
+  backdrop-filter: blur(5px);
+}
+
+.food-map-detail {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  width: min(900px, 100%);
+  max-height: min(85dvh, 760px);
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  background: var(--color-paper);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
+}
+
+.food-map-detail-close {
+  position: absolute;
+  z-index: 5;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid var(--color-line);
+  border-radius: 50%;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.food-map-detail-photos {
+  position: relative;
+  min-height: 380px;
+  background: #e6ddd0;
+}
+
+.food-map-detail-main-photo {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  object-fit: cover;
+}
+
+.food-map-detail-photo-placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #887d70;
+  font-size: 14px;
+}
+
+.food-map-detail-owner {
+  position: absolute;
+  z-index: 3;
+  right: 18px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px 8px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50px;
+  background: rgba(245, 240, 231, 0.95);
+  font-size: 12px;
+}
+
+.food-map-detail-owner img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.food-map-detail-content {
+  padding: clamp(24px, 4vw, 42px);
+}
+
+.food-map-detail-number {
+  color: var(--color-wine);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+
+.food-map-detail-content h2 {
+  margin: 10px 0 14px;
+  font-size: clamp(28px, 3vw, 40px);
+}
+
+.food-map-detail-type {
+  display: inline-block;
+  padding: 4px 12px;
+  border: 1px solid var(--color-wine);
+  border-radius: 30px;
+  color: var(--color-wine);
+  font-size: 12px;
+}
+
+.food-map-detail-description {
+  margin: 24px 0;
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.food-map-detail-list {
+  margin: 0;
+}
+
+.food-map-detail-list > div {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--color-line);
+  font-size: 13px;
+}
+
+.food-map-detail-list dt {
+  color: var(--color-muted);
+}
+
+.food-map-detail-list dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.food-map-detail-done {
+  width: 100%;
+  margin-top: 24px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--color-wine);
+  color: white;
+  font: inherit;
+  cursor: pointer;
+}
+
+.food-map-detail-done:hover {
+  background: #833e3e;
+}
+
+/* 手機版店家視窗 */
+
+@media (max-width: 600px) {
+  .food-map-detail-backdrop {
+    padding: 12px;
+  }
+
+  .food-map-detail {
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    max-height: 90dvh;
+  }
+
+  .food-map-detail-photos {
+    min-height: 220px;
+  }
+
+  .food-map-detail-main-photo {
+    height: 230px;
+    min-height: 230px;
+  }
+
+  .food-map-detail-owner img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .food-map-detail-content {
+    padding: 24px 20px;
+  }
+}
+
+.food-map-intro {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  align-items: center;
+  gap: 40px;
+  min-height: 360px;
+  padding: 30px 0 45px;
+}
+
+.food-map-intro-main {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+}
+
+.food-map-intro h2 {
+  margin: 0 0 24px;
+  color: var(--color-ink);
+  font-size: clamp(32px, 4vw, 54px);
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+}
+
+.food-map-intro p {
+  margin: 0 0 30px;
+  color: var(--color-muted);
+  font-size: clamp(14px, 1.2vw, 17px);
+  line-height: 1.9;
+}
+
+.food-map-open-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  color: var(--color-wine);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    gap 180ms ease,
+    border-color 180ms ease;
+}
+
+.food-map-open-link:hover {
+  gap: 16px;
+  border-bottom-color: currentColor;
+}
+
+.food-map-open-link:focus-visible {
+  outline: 2px solid var(--color-wine);
+  outline-offset: 5px;
+}
+
+.food-map-open-link span {
+  font-size: 18px;
+}
+
+/* 右側抽象街道裝飾 */
+.food-map-decoration {
+  width: 100%;
+  max-width: 500px;
+  justify-self: end;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.food-map-decoration svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.food-map-road {
+  fill: none;
+  stroke: #c69a69;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.food-map-river {
+  fill: none;
+  stroke: #28a6d6;
+  stroke-width: 13;
+  stroke-linecap: round;
+}
+
+.food-map-decoration-pin {
+  fill: var(--color-wine);
+  stroke: var(--color-paper);
+  stroke-width: 4;
+}
+
+.food-map-intro .food-map-count {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: var(--color-wine);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+}
+
+/* 平板 */
+@media (max-width: 900px) {
+  .food-map-intro {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.65fr);
+    gap: 20px;
+  }
+
+  .food-map-intro h2 {
+    font-size: clamp(30px, 4vw, 42px);
+  }
+}
+
+/* 手機 */
+@media (max-width: 600px) {
+  .food-map-intro {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    gap: 12px;
+    padding: 20px 0 40px;
+  }
+
+  .food-map-intro h2 {
+    font-size: clamp(30px, 7vw, 40px);
+  }
+
+  .food-map-intro p {
+    margin-bottom: 22px;
+  }
+
+  .food-map-decoration {
+    max-width: 260px;
+    justify-self: end;
+    margin-top: -10px;
+    opacity: 0.6;
+  }
+
+  .food-map-intro .food-map-count {
+    bottom: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .food-map-open-link {
+    transition: none;
+  }
+}
+
+/* ========================================
+   飲食指南：卡片互動
+======================================== */
+
+.guide-shop-trigger {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.guide-shop-trigger:focus-visible {
+  outline: 3px solid var(--color-wine);
+  outline-offset: 4px;
+}
+
+.guide-shop-trigger .shop-image {
+  overflow: hidden;
+}
+
+.guide-shop-trigger .shop-image img {
+  transition: transform 300ms ease;
+}
+
+.guide-shop-trigger:hover .shop-image img {
+  transform: scale(1.04);
+}
+
+.guide-image-empty {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  place-items: center;
+  background: #e9dfd2;
+  color: #82766b;
+  font-size: 13px;
+}
+
+/* ========================================
+   店家故事：彈出視窗
+======================================== */
+
+.guide-story-backdrop {
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(26, 22, 20, 0.75);
+  backdrop-filter: blur(6px);
+}
+
+.guide-story-dialog {
+  position: relative;
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr) minmax(0, 1fr);
+  width: min(1080px, 100%);
+  max-height: 90dvh;
+  overflow: auto;
+  border: 1px solid #ded3c5;
+  border-radius: 8px;
+  background: #faf7f2;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+}
+
+.guide-story-close {
+  position: absolute;
+  z-index: 5;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid #d8cbbb;
+  border-radius: 50%;
+  background: #faf7f2;
+  color: #292821;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.guide-story-close:hover {
+  background: #e9dfd2;
+}
+
+/* ========================================
+   左側：照片輪播
+======================================== */
+
+.guide-story-gallery {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: #e9dfd2;
+}
+
+.guide-story-photo {
+  position: relative;
+  flex: 1;
+  min-height: 420px;
+  overflow: hidden;
+}
+
+.guide-story-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  object-fit: cover;
+}
+
+.guide-story-gallery-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 24px;
+}
+
+.guide-story-gallery-controls button {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid #cbbba9;
+  border-radius: 50%;
+  background: transparent;
+  color: #292821;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.guide-story-gallery-controls button:hover {
+  background: #d9c9b7;
+}
+
+.guide-story-gallery-controls span {
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  color: #70665e;
+}
+
+.guide-story-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px 18px;
+}
+
+.guide-story-dots button {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #cbbba9;
+  cursor: pointer;
+}
+
+.guide-story-dots button.is-active {
+  background: #a25353;
+}
+
+/* ========================================
+   右側：店家故事
+======================================== */
+
+.guide-story-content {
+  min-width: 0;
+  padding: clamp(28px, 4vw, 56px);
+}
+
+.guide-story-kicker {
+  margin: 0 0 22px;
+  color: #a25353;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.guide-story-content h2 {
+  margin: 0 0 18px;
+  color: #292821;
+  font-size: clamp(30px, 3.2vw, 44px);
+  line-height: 1.3;
+}
+
+.guide-story-meal {
+  display: inline-block;
+  padding: 5px 14px;
+  border: 1px solid #a25353;
+  border-radius: 30px;
+  color: #a25353;
+  font-size: 12px;
+}
+
+.guide-story-lead {
+  margin: 24px 0;
+  color: #4c433d;
+  font-size: 17px;
+  line-height: 1.9;
+  font-weight: 500;
+}
+
+.guide-story-article {
+  padding-top: 20px;
+  border-top: 1px solid #ded3c5;
+}
+
+.guide-story-article p {
+  margin: 0 0 20px;
+  color: #5d554e;
+  font-size: 14px;
+  line-height: 2;
+  white-space: pre-line;
+}
+
+.guide-story-done {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
+  padding: 12px 0;
+  border: 0;
+  border-bottom: 1px solid #a25353;
+  background: transparent;
+  color: #a25353;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.guide-story-done:hover {
+  color: #833e3e;
+}
+
+/* 鍵盤操作 */
+.guide-story-dialog button:focus-visible {
+  outline: 3px solid #a25353;
+  outline-offset: 3px;
+}
+
+/* ========================================
+   手機與平板
+======================================== */
+
+@media (max-width: 800px) {
+  .guide-story-backdrop {
+    padding: 12px;
+  }
+
+  .guide-story-dialog {
+    grid-template-columns: 1fr;
+    max-height: 94dvh;
+  }
+
+  .guide-story-photo {
+    min-height: 260px;
+    flex: none;
+  }
+
+  .guide-story-photo img {
+    height: 280px;
+    min-height: 280px;
+  }
+
+  .guide-story-content {
+    padding: 28px 24px 36px;
+  }
+
+  .guide-story-content h2 {
+    font-size: 32px;
+  }
+
+  .guide-story-close {
+    top: 12px;
+    right: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .guide-story-backdrop {
+    padding: 8px;
+  }
+
+  .guide-story-photo {
+    min-height: 210px;
+  }
+
+  .guide-story-photo img {
+    height: 230px;
+    min-height: 230px;
+  }
+
+  .guide-story-gallery-controls {
+    padding: 10px 18px;
+  }
+
+  .guide-story-content {
+    padding: 24px 20px 32px;
+  }
+
+  .guide-story-lead {
+    font-size: 15px;
+  }
+
+  .guide-story-article p {
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-shop-trigger .shop-image img {
+    transition: none;
+  }
+}
+
+/* ========================================
+   飲食指南：橫向展示櫃
+======================================== */
+
+.guide-carousel {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+/* 可視範圍：隱藏左右超出的店家 */
+.guide-carousel-viewport {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* 店家橫向排列 */
+.guide-carousel-track {
+  --carousel-gap: 20px;
+
+  display: flex;
+  align-items: stretch;
+  gap: var(--carousel-gap);
+
+  transform: translateX(
+    calc(
+      var(--carousel-index) * -1 *
+      (
+        (100% - (var(--visible-count) - 1) * var(--carousel-gap))
+        / var(--visible-count)
+        + var(--carousel-gap)
+      )
+    )
+  );
+
+  transition: transform 450ms cubic-bezier(
+    0.22, 1, 0.36, 1
+  );
+
+  will-change: transform;
+}
+
+/* 每張卡片固定佔三分之一 */
+.guide-carousel-item {
+  flex: 0 0 calc(
+    (100% - (var(--visible-count) - 1) * var(--carousel-gap))
+    / var(--visible-count)
+  );
+
+  min-width: 0;
+  margin: 0;
+}
+
+/* 保留原本店家卡片的完整高度 */
+.guide-carousel-item .guide-shop-trigger {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+/* 圖片比例統一 */
+.guide-carousel-item .shop-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+}
+
+.guide-carousel-item .shop-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 讓不同長度的介紹仍保持按鈕對齊 */
+.guide-carousel-item .shop-copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.guide-carousel-item .shop-copy .text-link {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+/* ========================================
+   左右箭頭
+======================================== */
+
+.guide-carousel-arrow {
+  position: absolute;
+  z-index: 5;
+  top: 33%;
+
+  display: grid;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  place-items: center;
+
+  border: 1px solid #d8c9b8;
+  border-radius: 50%;
+
+  background: rgba(250, 247, 242, 0.96);
+  color: #a25353;
+
+  font-size: 34px;
+  line-height: 1;
+  cursor: pointer;
+
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+  transition:
+    background 180ms ease,
+    transform 180ms ease,
+    opacity 180ms ease;
+}
+
+.guide-carousel-arrow:hover:not(:disabled) {
+  background: #a25353;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.guide-carousel-arrow:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.guide-carousel-prev {
+  left: -23px;
+}
+
+.guide-carousel-next {
+  right: -23px;
+}
+
+.guide-carousel-arrow:focus-visible {
+  outline: 3px solid #a25353;
+  outline-offset: 3px;
+}
+
+/* ========================================
+   底部進度
+======================================== */
+
+.guide-carousel-bottom {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 30px;
+}
+
+.guide-carousel-counter {
+  flex-shrink: 0;
+  color: #a25353;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+}
+
+.guide-carousel-progress {
+  flex: 1;
+  height: 2px;
+  overflow: hidden;
+  background: #ded3c5;
+}
+
+.guide-carousel-progress span {
+  display: block;
+  height: 100%;
+  background: #a25353;
+  transition: width 450ms ease;
+}
+
+.guide-carousel-hint {
+  flex-shrink: 0;
+  color: #82766b;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+/* ========================================
+   平板
+======================================== */
+
+@media (max-width: 1000px) {
+  .guide-carousel-track {
+    --carousel-gap: 16px;
+  }
+
+  .guide-carousel-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 28px;
+  }
+
+  .guide-carousel-prev {
+    left: -12px;
+  }
+
+  .guide-carousel-next {
+    right: -12px;
+  }
+}
+
+/* ========================================
+   手機
+======================================== */
+
+@media (max-width: 600px) {
+  .guide-carousel-track {
+    --carousel-gap: 12px;
+  }
+
+  .guide-carousel-item .shop-image {
+    aspect-ratio: 4 / 3;
+  }
+
+  .guide-carousel-arrow {
+    top: 30%;
+    width: 38px;
+    height: 38px;
+  }
+
+  .guide-carousel-prev {
+    left: 4px;
+  }
+
+  .guide-carousel-next {
+    right: 4px;
+  }
+
+  .guide-carousel-bottom {
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .guide-carousel-hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-carousel-track,
+  .guide-carousel-progress span {
+    transition: none;
+  }
+}
+
+/* Publication 外層響應式設定 */
+
+#publication {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  scroll-margin-top: 90px;
+}
+
+/* 新增一層閱讀器容器 */
+.publication-reader-shell {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 0;
+  margin-inline: auto;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  overflow: visible;
+}
+
+/* 翻頁控制列 */
+.publication-reader-controls {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 12px 24px;
+  box-sizing: border-box;
+}
+
+/* 手機版 */
+@media (max-width: 768px) {
+  #publication {
+    padding-inline: 12px;
+  }
+
+  .publication-reader-shell {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .publication-reader-controls {
+    gap: 10px;
+    padding: 14px 8px 24px;
+  }
+}
+
+/* 導覽列閱讀雜誌按鈕 */
+
+button.nav-cta {
+  appearance: none;
+  -webkit-appearance: none;
+
+  font: inherit;
+  line-height: inherit;
+
+  cursor: pointer;
+  text-decoration: none;
+}
+
+button.nav-cta:focus-visible {
+  outline: 3px solid #a25353;
+  outline-offset: 4px;
+}
