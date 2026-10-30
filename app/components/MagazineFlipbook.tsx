@@ -44,6 +44,7 @@ export default function MagazineFlipbook({
 
   const [pageWidth, setPageWidth] = useState(300);
   const [pageHeight, setPageHeight] = useState(424);
+  const [renderPixelRatio, setRenderPixelRatio] = useState(1.5);
   const [isMobile, setIsMobile] = useState(false);
   const [isReady, setIsReady] = useState(false);
 
@@ -102,21 +103,25 @@ export default function MagazineFlipbook({
   }, []);
 
   useEffect(() => {
-    updateSize();
-
-    const observer = new ResizeObserver(() => {
+    const updateDisplay = () => {
       updateSize();
-    });
-
-    if (viewportRef.current) {
-      observer.observe(viewportRef.current);
-    }
-
-    window.addEventListener("resize", updateSize);
-
+  
+      const deviceRatio = window.devicePixelRatio || 1;
+  
+      // 最低 2 倍，最高 3 倍
+      // 避免高解析度螢幕產生模糊，
+      // 同時限制記憶體使用量。
+      const ratio = Math.min(3, Math.max(2, deviceRatio));
+  
+      setRenderPixelRatio(ratio);
+    };
+  
+    updateDisplay();
+  
+    window.addEventListener("resize", updateDisplay);
+  
     return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", updateSize);
+      window.removeEventListener("resize", updateDisplay);
     };
   }, [updateSize]);
 
@@ -287,7 +292,7 @@ export default function MagazineFlipbook({
                           <Page
                             pageNumber={index + 1}
                             width={pageWidth}
-                            devicePixelRatio={1.5}
+                            devicePixelRatio={renderPixelRatio}
                             renderTextLayer={false}
                             renderAnnotationLayer={false}
                             loading={
