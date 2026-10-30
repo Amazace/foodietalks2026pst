@@ -223,7 +223,7 @@ export default function Home() {
 
         <div className="footer-bottom">
           <p>© 2026 NCCU USR</p>
-          <p>TEL : 02-29393091    ｜    Email : usr@nccu.edu.tw</p>
+          <p>Email : foodietalks114@gmail.com</p>
         </div>
       </footer>
     </main>
